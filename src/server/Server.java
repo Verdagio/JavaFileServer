@@ -1,3 +1,8 @@
+/* Reference: http://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
+ * https://learnonline.gmit.ie/mod/resource/view.php?id=65284
+ * I used the above as a references when building the server side
+ */
+
 package server;
 
 import java.util.concurrent.*;
@@ -31,7 +36,7 @@ public class Server{
 			Thread server = new Thread(new EventListener());
 			server.setPriority(Thread.MAX_PRIORITY);
 			server.start();
-			System.out.printf("\n\t\t\t***Server active on port no: %d***", port);
+			System.out.printf("\n\n\t***Server active on port no: %d***\n\n", port);
 			
 			//start the request logger on its own consumer thread 
 			new Thread(new RequestLogger(q)).start();
@@ -48,7 +53,7 @@ public class Server{
 		
 		//this will control our while loop, we make it volatile because we don't want a cached value, we want the actual
 		private volatile boolean running = true;
-		private ObjectInputStream ois;
+		private ObjectInputStream outStr;
 		Socket s;
 		Request r;
 			
@@ -63,9 +68,10 @@ public class Server{
 					//Threads will wait here for an incoming request
 					s = ss.accept();
 					
-					//An ObjectInputStream deserializes primitive data and objects previously written using an ObjectOutputStream.
-					ois = new ObjectInputStream(s.getInputStream());
-					r = (Request) ois.readObject(); //cast it to a REquest object and assign
+					//	1	An ObjectInputStream deserializes primitive data and objects previously written using an ObjectOutputStream.
+					//	2	cast it to a Request object and assign
+					outStr = new ObjectInputStream(s.getInputStream());	//	1
+					r = (Request) outStr.readObject(); 					//	2
 					
 					//check what kind of request is made
 					if(r instanceof PoisonRequest){
@@ -80,7 +86,8 @@ public class Server{
 					r.setSocket(s);
 					new Thread(r).start();
 					
-					q.put(r);// add request to the blocking queue
+					// add request to the blocking queue
+					q.put(r);
 					
 					new Thread(new RequestLogger(q)).start();
 					
