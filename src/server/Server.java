@@ -20,7 +20,7 @@ public class Server{
 	
 	
 	//the blocking queue of incoming requests, 10 max
-	BlockingQueue<Request> q = new ArrayBlockingQueue<>(10);
+	private BlockingQueue<Request> q = new ArrayBlockingQueue<>(10);
 	
 	public Server(int port, String path){
 		this.port = port;
@@ -49,13 +49,13 @@ public class Server{
  * 	The event listener listens for incoming client requests 
  *	EventListener plays the role / borrows functionality of a thread but is not one (extends Thread)
  */
-	class EventListener implements Runnable{
+	private class EventListener implements Runnable{
 		
 		//this will control our while loop, we make it volatile because we don't want a cached value, we want the actual
 		private volatile boolean running = true;
 		private ObjectInputStream outStr;
-		Socket s;
-		Request r;
+		private Socket s;
+		private Request r;
 			
 		public void run() {
 			

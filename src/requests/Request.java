@@ -11,7 +11,6 @@ public class Request implements Serializable, Runnable{
 	private static final long serialVersionUID = 1L;
 	private Socket socket;
 	private String client;
-	private String command;
 	private String host;
 	private Date date;
 	private int port;
@@ -22,14 +21,6 @@ public class Request implements Serializable, Runnable{
 		date = new Date();
 		this.client = client;
 	}//request
-	
-	public String getCommand() {
-		return command;
-	}
-
-	public void setCommand(String command) {
-		this.command = command;
-	}
 
 	public String getHost() {
 		return host;

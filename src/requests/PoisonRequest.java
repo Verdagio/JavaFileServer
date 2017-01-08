@@ -1,15 +1,26 @@
 package requests;
 
+import java.util.concurrent.BlockingQueue;
+
 public class PoisonRequest extends Request{
 
 	private static final long serialVersionUID = 1L;
+	
+	private BlockingQueue<Request> q;
 
 	public PoisonRequest(String ip) {
 		super(ip);
 	}//default
 	
 	public void run(){
-		//do something here... not quite sure
+
+		super.streamSetup("Server shutdown..");
+		
+		try {
+			q.put(new PoisonRequest(super.getClient()));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}//run
 	
 	public String toString() {

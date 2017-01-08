@@ -12,7 +12,7 @@ public class RequestLogger implements Runnable{
 	
 	public RequestLogger(BlockingQueue<Request> q) throws Exception{
 		this.q = q;
-		fw = new FileWriter(new File("log.txt"));
+		fw = new FileWriter(new File("requestLog.txt"));
 		active = true;
 	}//request log
 	
@@ -22,15 +22,20 @@ public class RequestLogger implements Runnable{
 				Request request = q.take();
 				System.out.println(request.toString());
 				fw.write(request.toString()+"\n");
+				if(request instanceof PoisonRequest){
+					active = false;
+				}
 			}catch(Exception e){
 				e.printStackTrace();
 			}//try catch
 		}//while
+		
 		try {
-			fw.close();//free up resources when not running
+			fw.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}//try catch
+		}
 	}//run
 }//request logger
 

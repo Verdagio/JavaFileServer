@@ -2,7 +2,7 @@ package client;
 
 public class UI {
 	
-	boolean active;
+	private boolean active;
 	
 	public UI(){
 		this.active = true;
@@ -25,7 +25,11 @@ public class UI {
 	}//send file to server
 	
 	public void getFrom(){
-		System.out.println("Please choose a file from the list...");
+		System.out.printf("\nEnter the destination path: ");
+	}
+	
+	public void chooseFile(){
+		System.out.println("Choose file...");
 	}
 	
 	public boolean isActive(){

@@ -1,22 +1,24 @@
 package server;
 
+import java.util.Scanner;
+
 public class ServerRunner {
 	public static void main(String[]args){
+		Scanner in = new Scanner(System.in);
 		String path;
 		int port;
-		System.out.println("1");
 		try{
-			port = Integer.parseInt(args[0]);
-			System.out.println("2");
-			path = args[1];
-			System.out.println("3");
+			
+			port = 7000;
+			System.out.println("enter file location: ");
+			path = in.nextLine();
+			
 		}catch(Exception e){
 			e.printStackTrace();
 			return;
 		}//try catch
 		
 		//start an instance of the server using the input port and path
-		System.out.println("4");
 		new Server(port, path);
 	}//main
 }//class

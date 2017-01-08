@@ -12,8 +12,8 @@ public class ClientRunner {
 		UI ui = new UI();
 		XMLParse parser = new XMLParse(conf);
 		parser.parse();
-		System.out.println(conf);		
 		int choice;
+		String destination = null;
 		FileOperations fo = new FileOperations(conf);
 		Scanner in = new Scanner(System.in);
 
@@ -36,7 +36,13 @@ public class ClientRunner {
 			case 3:
 				// get from server
 				ui.getFrom();
-				fo.recieveFIle();
+				destination = in.next();
+				if(destination != null){
+					ui.chooseFile();
+					in.nextLine();
+					fo.receiveFile(destination);
+					
+				}
 				break;
 			case 4:
 				//send to server

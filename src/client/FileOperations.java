@@ -35,33 +35,39 @@ public class FileOperations {
 		
 			try {			
 				socketSetup();//see method below	
-				System.out.println("Connection succesful...");
+				System.out.printf("\n\t***Connecting Client [ %s ] to %s on port: %d\n", ip, host, port);
+
 				streamSetup(new ConnectionRequest(ip));	//see method below
 	
 				res = (String) inStr.readObject();// De-serialize and cast to a string
 				
 				System.out.println(res);//print out the result
-				
+				System.out.println("Connection succesful...");
+
 			} catch (Exception e) {
 				// Use a general Exception, handling unknown and i/o exceptions
 				e.printStackTrace();
 			} //try / catch
+			
 	}//connect
 	
-	public void recieveFIle(){
+	public void receiveFile(String path){
 		Scanner in = new Scanner(System.in);
 		FileOutputStream stream;
 		byte[] bytes;
 		String loc;
 		String choice;
-		int i=-1;
+		int i=0;
+		File tmp;
 
+		
+		fileList();
+		
 		choice = in.next();
 		
-		for(File tmp : files){
+		for(i = 0; i < files.length; i++){
 			//for each file in the array, assign our temp file the current file from the array
 			tmp = files[i];
-			i++;
 			if(tmp.getName().equals(choice)){
 				
 				try {
@@ -76,7 +82,7 @@ public class FileOperations {
 					 * 	3	close this input stream to release any system resources used by stream.
 					 */
 					
-					loc = dir +"/"+choice;
+					loc = path+"/"+choice;
 					stream = new FileOutputStream(loc);		//	1
 					stream.write(bytes);					//	2
 					stream.close();							//	3
@@ -128,7 +134,8 @@ public class FileOperations {
 	}//send file to server
 	
 	public void fileList(){
-		int i=0;
+		int i = 0;
+	
 		try{
 			
 			socketSetup();//see method below
@@ -136,11 +143,11 @@ public class FileOperations {
 			
 			files = (File[]) inStr.readObject();
 			
-			for(File tmp : files){
-				tmp = files[i];
-				System.out.printf("%d\t:\t%s",i+1, tmp.getName());
+			for(File f : files){
+				f = files[i];
+				System.out.printf("\t[ %d : %s\t]\n",i+1,f.getName());
 				i++;
-			}//for each file in files array print out its title
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}//try catch
@@ -161,6 +168,7 @@ public class FileOperations {
 			System.out.println("Poison Request Received...");
 			
 			sock.close();
+			System.exit(0);
 		}catch(Exception e){
 			e.printStackTrace();
 		}//try catch
@@ -174,7 +182,6 @@ public class FileOperations {
 		sock = new Socket(host, port);								//	1
 		ip = sock.getLocalAddress().getHostAddress();				//	2
 		
-		System.out.printf("\n\t***Connecting Client [ %s ] to %s on port: %d", ip, host, port);
 	}
 	
 	private void streamSetup(Request r) throws IOException{	
@@ -183,11 +190,11 @@ public class FileOperations {
 		 * 2 write the request object from method arguments to the ObjectOutputStream.
 		 * 3 flush the stream
 		 */
-		outStr = new ObjectOutputStream(sock.getOutputStream());	//	1
+		outStr = new ObjectOutputStream(this.sock.getOutputStream());	//	1
 		outStr.writeObject(r);										//	2
 		outStr.flush();												//	3
 		
-		inStr = new ObjectInputStream(sock.getInputStream());
+		inStr = new ObjectInputStream(this.sock.getInputStream());
 		
 		System.out.println("Streams successfully setup...");
 	}// stream setup method

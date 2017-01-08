@@ -11,7 +11,7 @@ import org.w3c.dom.*;
 
 public class XMLParse implements Parsator {
 	
-	Conf conf = new Conf();
+	private Conf conf = new Conf();
 	
 	public XMLParse(Conf conf){
 		this.conf = conf;
