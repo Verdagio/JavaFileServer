@@ -8,12 +8,10 @@ public class PoisonRequest extends Request{
 		super(ip);
 	}//default
 	
-	@Override
 	public void run(){
-		
+		//do something here... not quite sure
 	}//run
 	
-	@Override
 	public String toString() {
 		String message;
 		message = "[ PoisonRequest | " +super.getClient() + " | " + super.getDate().toString() +" ]";

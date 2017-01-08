@@ -57,7 +57,6 @@ public class Server{
 		Socket s;
 		Request r;
 			
-		@Override
 		public void run() {
 			
 			int i = 0;

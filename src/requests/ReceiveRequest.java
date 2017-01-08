@@ -61,7 +61,6 @@ public class ReceiveRequest extends Request {
 		this.name = name;
 	}
 	
-	@Override
 	public String toString() {
 		String message;
 		message = "[ ReceiveRequest | " +super.getClient() + " | " + super.getDate().toString() +" ]";

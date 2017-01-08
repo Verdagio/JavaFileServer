@@ -11,14 +11,12 @@ public class ConnectionRequest extends Request {
 		super(ip);
 	}//constructor
 	
-	@Override
 	public void run(){
 
 		super.streamSetup("Connected...");
 
 	}//run
 
-	@Override
 	public String toString() {
 		String message;
 		message = "[ ConnectionRequest | " +super.getClient() + " | " + super.getDate().toString() +" ]";

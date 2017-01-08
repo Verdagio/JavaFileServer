@@ -16,7 +16,6 @@ public class RequestLogger implements Runnable{
 		active = true;
 	}//request log
 	
-	@Override
 	public void run() {
 		while(active){
 			try{

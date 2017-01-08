@@ -17,7 +17,6 @@ public class XMLParse implements Parsator {
 		this.conf = conf;
 	}//constructor
 	
-	@Override
 	public void parse() throws Throwable {
 		
 		

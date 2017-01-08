@@ -11,7 +11,6 @@ public class ListRequest extends Request{
 		super(ip);
 	}//default
 	
-	@Override
 	public void run(){
 		
 		File f = new File(path);
@@ -27,7 +26,6 @@ public class ListRequest extends Request{
 		this.path = path;
 	}
 	
-	@Override
 	public String toString() {
 		String message;
 		message = "[ ListRequest | " +super.getClient() + " | " + super.getDate().toString() +" ]";
