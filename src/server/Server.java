@@ -40,7 +40,7 @@ public class Server{
 			
 			//start the request logger on its own consumer thread 
 			new Thread(new RequestLogger(q)).start();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}//try catch
 	}//server constructor
@@ -76,17 +76,20 @@ public class Server{
 					//check what kind of request is made
 					if(r instanceof PoisonRequest){
 						//we want to stop the server if this comes in...
-						
+						setRunning(false);
 					}else if(r instanceof ListRequest){
-						//handle list requests...
-						
+						//handle list requests... set path of file directory
+						((ListRequest) r).setPath(path);
+					}else if(r instanceof ReceiveRequest){
+						//handle receive requests... set path of file directory
+						((ReceiveRequest) r).setPath(path);
 					}//if else if
 					
-					//run on independent thread
+					//job runs on independent thread
 					r.setSocket(s);
-					new Thread(r).start();
+					new Thread(r, "r"+i).start();
 					
-					// add request to the blocking queue
+					// put request into the blocking queue
 					q.put(r);
 					
 					new Thread(new RequestLogger(q)).start();
@@ -96,9 +99,16 @@ public class Server{
 					// Use a general Exception, we need IO & Class not found Exception handling
 					e.printStackTrace();
 				}// try catch
-
 				
 			}//while
 		}//run
+
+		public boolean isRunning() {
+			return running;
+		}
+
+		public void setRunning(boolean running) {
+			this.running = running;
+		}
 	}//inner class
 }//class

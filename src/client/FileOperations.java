@@ -51,7 +51,7 @@ public class FileOperations {
 		Scanner in = new Scanner(System.in);
 		FileOutputStream stream;
 		byte[] bytes;
-		String fullPath;
+		String loc;
 		String choice;
 		int i=-1;
 
@@ -75,10 +75,10 @@ public class FileOperations {
 					 * 	3	close this input stream to release any system resources used by stream.
 					 */
 					
-					fullPath = dir +"/"+choice;
-					stream = new FileOutputStream(fullPath);		//	1
-					stream.write(bytes);							//	2
-					stream.close();									//	3
+					loc = dir +"/"+choice;
+					stream = new FileOutputStream(loc);		//	1
+					stream.write(bytes);					//	2
+					stream.close();							//	3
 					System.out.printf("%s received from server...", choice);
 					
 				} catch (Exception e) { //handle multiple types of exceptions

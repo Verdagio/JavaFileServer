@@ -1,5 +1,8 @@
 package requests;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.*;
 import java.util.*;
@@ -19,7 +22,7 @@ public class Request implements Serializable, Runnable{
 		date = new Date();
 		this.client = client;
 	}//request
-
+	
 	public String getCommand() {
 		return command;
 	}
@@ -35,7 +38,6 @@ public class Request implements Serializable, Runnable{
 	public void setHost(String host) {
 		this.host = host;
 	}
-	
 	
 	public Date getDate() {
 		return date;
@@ -69,10 +71,45 @@ public class Request implements Serializable, Runnable{
 		this.port = port;
 	}
 
-	@Override
-	public void run() {
-		//no changes needed...
-	}
+	public void run(){}//Move along folks nothing to see here. . .
 	
+	public void streamSetup(String str){
+		ObjectOutputStream outStr;
+		try {
+			outStr = new ObjectOutputStream(socket.getOutputStream());
+			outStr.writeObject(str);
+			outStr.flush();
+			outStr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//try catch
+	}// stream setup
+	
+	public void streamSetup(File[] f){
+		ObjectOutputStream outStr;
+		try {
+			outStr = new ObjectOutputStream(socket.getOutputStream());
+			outStr.writeObject(f);
+			outStr.flush();
+			outStr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//try catch
+	}// stream setup overloaded
+	
+	public void streamSetup(byte[] b){
+		ObjectOutputStream outStr;
+		try {
+			outStr = new ObjectOutputStream(socket.getOutputStream());
+			outStr.writeObject(b);
+			outStr.flush();
+			outStr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//try catch
+	}// stream setup overloaded
 	
 }
