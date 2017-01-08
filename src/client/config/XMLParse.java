@@ -31,23 +31,23 @@ public class XMLParse implements Parsator {
 		//primary access to the document's data.
 		Document doc = db.parse(conf.getConfigFile());
 		
-		Element e = doc.getDocumentElement();//ROOT of Tree
-		NodeList kids = e.getChildNodes(); // get the kids 
+		Element root = doc.getDocumentElement();//ROOT of Tree
+		NodeList kids = root.getChildNodes(); // get the kids 
 		
 		for(int i =0; i < kids.getLength(); i++){
 			Node tmp = kids.item(i);//if the node is an element then cast it to one
 			
 			//assign the private variables of conf values based off the following
 			if(tmp instanceof Element){
-				Element e1 = (Element) tmp;
-				if(e.getNodeName().equals("host")){
-					conf.setHost(e.getFirstChild().getNodeValue());
+				Element el = (Element) tmp;
+				if(el.getNodeName().equals("host")){
+					conf.setHost(el.getFirstChild().getNodeValue());
 				}//if its host then set the value
-				else if(e.getNodeName().equals("port")){
-					conf.setPort(Integer.parseInt(e.getFirstChild().getNodeValue()));
+				else if(el.getNodeName().equals("port")){
+					conf.setPort(Integer.parseInt(el.getFirstChild().getNodeValue()));
 				}//if its port then set its value
-				else if(e.getNodeName().equals("dir")){
-					conf.setDir(e.getFirstChild().getNodeValue());
+				else if(el.getNodeName().equals("dir")){
+					conf.setDir(el.getFirstChild().getNodeValue());
 				}//if its directory set its value 
 			}//if	
 		}//for loop

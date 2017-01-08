@@ -35,6 +35,7 @@ public class FileOperations {
 		
 			try {			
 				socketSetup();//see method below	
+				System.out.println("Connection succesful...");
 				streamSetup(new ConnectionRequest(ip));	//see method below
 	
 				res = (String) inStr.readObject();// De-serialize and cast to a string
@@ -102,7 +103,6 @@ public class FileOperations {
 		File theFile;
 		byte[] bytes;
 		FileInputStream fis;
-		DataOutputStream data;
 		
 		try{
 			/*		Handle the file
@@ -159,6 +159,8 @@ public class FileOperations {
 			streamSetup(new PoisonRequest(ip));	//see method below
 			
 			System.out.println("Poison Request Received...");
+			
+			sock.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}//try catch

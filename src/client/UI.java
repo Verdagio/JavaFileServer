@@ -9,7 +9,7 @@ public class UI {
 	}//default
 	
 	public void menu(){
-		System.out.printf("\n\t[ 1 | Connect to file server ]\n\t[ 2 | Print file listing on server ]\n\t[ 3 | Download file ]\n\t[ 4 | Send a file to server(Currently not working) ]\n\t[ 5 | Quit ]\n");
+		System.out.printf("\n\t[ 1 | Connect to file server\t]\n\t[ 2 | See file list on server\t]\n\t[ 3 | Download file\t\t]\n\t[ 4 | Send a file to server\t]*Not Working\n\t[ 5 | Quit\t\t\t]\n");
 		
 	}//menu
 	public void connecting(){
